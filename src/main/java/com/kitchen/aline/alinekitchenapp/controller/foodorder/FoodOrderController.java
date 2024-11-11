@@ -2,6 +2,7 @@ package com.kitchen.aline.alinekitchenapp.controller.foodorder;
 
 import com.kitchen.aline.alinekitchenapp.controller.foodorder.dto.CreateOrderDTO;
 import com.kitchen.aline.alinekitchenapp.controller.foodorder.dto.MenuDTO;
+import com.kitchen.aline.alinekitchenapp.controller.foodorder.dto.OrderDetailDTO;
 import com.kitchen.aline.alinekitchenapp.core.features.foodvariant.FoodVariantComponent;
 import com.kitchen.aline.alinekitchenapp.core.features.order.OrderComponent;
 import com.kitchen.aline.alinekitchenapp.core.features.order.dto.FoodOrderDTO;
@@ -46,7 +47,8 @@ public class FoodOrderController {
         List<FoodVariant> foodVariants = foodVariantComponent.getAll();
         List<MenuDTO> menus = foodVariants.stream().map(menu -> {
             Food food = menu.getFood();
-            String menuDescription = food.getName() + " - " + menu.getName() + "@" + RupiahFormatter.format(menu.getPrice());
+            String menuDescription = food.getName() + " - " + menu.getName() + "@"
+                    + RupiahFormatter.format(menu.getPrice());
             return new MenuDTO(menu.getId(), menu.getPrice(), menuDescription);
         }).toList();
 
@@ -54,6 +56,25 @@ public class FoodOrderController {
         model.addAttribute("order", new CreateOrderDTO());
 
         return "order/create";
+    }
+
+    @ResponseBody
+    @GetMapping("/details")
+    public List<OrderDetailDTO> getDetails(@RequestParam Integer orderId) {
+        FoodOrder order = orderComponent.get(new FoodOrder(orderId));
+        return order.getDetails().stream()
+                .map(detail -> {
+                    OrderDetailDTO result = new OrderDetailDTO();
+
+                    FoodVariant foodVariant = detail.getFoodVariant();
+                    Food food = foodVariant.getFood();
+                    String orderDesc = food.getName() + " - " + foodVariant.getName() + "@" + foodVariant.getPrice()
+                            + " X "
+                            + detail.getQuantity();
+                    result.setOrderDesc(orderDesc);
+                    result.setPaymentSubtotal(detail.getPaymentSubtotal().toString());
+                    return result;
+                }).toList();
     }
 
     @ResponseBody
@@ -75,13 +96,12 @@ public class FoodOrderController {
             foodOrder.addDetail(foodOrderDetail);
         });
 
-
         orderComponent.create(foodOrder);
 
         return "Success";
     }
 
-    @GetMapping("/paid")
+    @GetMapping("/pay")
     public String pay(@RequestParam Integer orderId, RedirectAttributes redirectAttributes) {
 
         FoodOrder foodOrder = new FoodOrder(orderId);
@@ -93,7 +113,7 @@ public class FoodOrderController {
         return "redirect:/orders/";
     }
 
-    @GetMapping("/delivered")
+    @GetMapping("/deliver")
     public String deliver(@RequestParam Integer orderId, RedirectAttributes redirectAttributes) {
 
         FoodOrder foodOrder = new FoodOrder(orderId);

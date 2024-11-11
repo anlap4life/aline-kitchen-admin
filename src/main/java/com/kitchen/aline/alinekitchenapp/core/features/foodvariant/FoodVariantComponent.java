@@ -1,6 +1,7 @@
 package com.kitchen.aline.alinekitchenapp.core.features.foodvariant;
 
 import com.kitchen.aline.alinekitchenapp.domain.Food;
+import com.kitchen.aline.alinekitchenapp.domain.FoodOrder;
 import com.kitchen.aline.alinekitchenapp.domain.FoodVariant;
 
 import java.util.List;
