@@ -4,7 +4,7 @@ import lombok.Getter;
 
 @Getter
 public enum OrderStatus {
-    ORDERED("Sudah Pesan"),
+    ORDERED("Belum Bayar"),
     PAID("Sudah Bayar"),
     DELIVERED("Sudah Diantar");
 
