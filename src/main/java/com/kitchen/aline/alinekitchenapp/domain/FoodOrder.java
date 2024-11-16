@@ -41,6 +41,10 @@ public class FoodOrder {
         this.id = id;
     }
 
+    public FoodOrder(OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+    }
+
     public void addDetail(FoodOrderDetail foodOrderDetail) {
         this.getDetails().add(foodOrderDetail);
 
