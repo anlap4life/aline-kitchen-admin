@@ -16,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import com.kitchen.aline.alinekitchenapp.core.contracts.repository.FoodOrderRepository;
 import com.kitchen.aline.alinekitchenapp.core.contracts.repository.ProcurementRepository;
+import com.kitchen.aline.alinekitchenapp.core.features.dashboard.dto.ChartDataset;
 import com.kitchen.aline.alinekitchenapp.domain.FoodOrder;
 import com.kitchen.aline.alinekitchenapp.domain.OrderStatus;
 
@@ -75,5 +76,14 @@ public class DashboardComponentImplTest {
 
         // THEN
         assertThat(expected.size()).isEqualTo(3);
+        
+        ChartDataset belumBayarDataset = expected.get(0);
+        assertThat(belumBayarDataset.getData()).containsExactly(1, 1, 0, 0, 0, 0, 0);
+
+        ChartDataset sudahBayarDataset = expected.get(1);
+        assertThat(sudahBayarDataset.getData()).containsExactly(1, 0, 0, 0, 1, 0, 0);
+
+        ChartDataset sudahDikirimDataset = expected.get(2);
+        assertThat(sudahDikirimDataset.getData()).containsExactly(1, 0, 1, 2, 0, 0, 0);
     }
 }
