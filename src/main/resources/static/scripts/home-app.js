@@ -14,27 +14,7 @@ const homeApp = (function () {
           "Sabtu",
           "Minggu",
         ],
-        datasets: [
-          {
-            label: "Belum Bayar",
-            data: [12, 19, 3, 5, 2, 3, 2, 3],
-            borderWidth: 1,
-            backgroundColor: "rgba(220,53,69,0.2)",
-          },
-          {
-            label: "Sudah Bayar",
-            data: [12, 19, 3, 5, 2, 3, 2, 3],
-            borderWidth: 1,
-            backgroundColor: "rgba(220,53,69,0.5)",
-          },
-
-          {
-            label: "Sudah Diantar",
-            data: [12, 19, 3, 5, 2, 3, 2, 3],
-            borderWidth: 1,
-            backgroundColor: "rgba(220,53,69,255)",
-          },
-        ],
+        datasets: chartDataset,
       },
       options: {
         responsive: true,

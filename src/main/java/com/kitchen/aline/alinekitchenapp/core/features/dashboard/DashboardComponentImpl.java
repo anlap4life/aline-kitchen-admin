@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.kitchen.aline.alinekitchenapp.core.contracts.repository.FoodOrderRepository;
 import com.kitchen.aline.alinekitchenapp.core.contracts.repository.ProcurementRepository;
+import com.kitchen.aline.alinekitchenapp.core.features.dashboard.dto.ChartDataset;
 import com.kitchen.aline.alinekitchenapp.core.features.dashboard.dto.ChartDatasetColorLibrary;
 import com.kitchen.aline.alinekitchenapp.domain.FoodOrder;
 import com.kitchen.aline.alinekitchenapp.domain.OrderStatus;
@@ -139,7 +140,11 @@ class DashboardComponentImpl implements DashboardComponent {
             Date date = tranformLocalDateToDate(currentDay);
             weekDays.add(date);
             currentDay = currentDay.plusDays(1);
+
+            System.out.println(date.toString());
         }
+
+   
 
         return weekDays;
     }
